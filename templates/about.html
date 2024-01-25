@@ -1,0 +1,248 @@
+{% extends "layout.html" %}
+{% block title%}About{% endblock %}
+{% block body %}  
+
+
+
+<body class="about">
+
+<!-- Page Title Starts -->
+<section class="title-section text-left text-sm-center revealator-slideup revealator-once revealator-delay1">
+    <h1>ABOUT <span>ME</span></h1>
+    <span class="title-bg">Resume</span>
+</section>
+<!-- Page Title Ends -->
+<!-- Main Content Starts -->
+<section class="main-content revealator-slideup revealator-once revealator-delay1">
+    <div class="container">
+        <div class="row">
+            <!-- Personal Info Starts -->
+            <div class="col-12 col-lg-5 col-xl-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-uppercase custom-title mb-0 ft-wt-600">personal infos</h3>
+                    </div>
+                    <div class="col-12 d-block d-sm-none">
+                     
+                     {% set fname = 'img/' + info.img %}
+                        <img src="{{url_for('static', filename='img/img-mobile.jpg')}}" class="img-fluid main-img-mobile" alt="my picture" />
+                    </div>
+                    
+                    <div class="col-6">
+                        <ul class="about-list list-unstyled open-sans-font">
+                            <li> <span class="title">First name :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{info.fname}}</span> </li>
+                            <li> <span class="title">Last Name :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{info.lname}}</span> </li>
+                            <li> <span class="title">Date of Birth :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{data.DOB}}</span> </li>
+                            <li> <span class="title">Nationality :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{data.nationality}}</span> </li>
+                            <li> <span class="title">Freelance :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{% if data.freelance==1 %} Available {%else%} Not Available  {% endif %}</span> </li>
+                        </ul> 
+                    </div>
+                    <div class="col-6">
+                        <ul class="about-list list-unstyled open-sans-font">
+                            <li> <span class="title">Address :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{data.address}}</span> </li>
+                            <li> <span class="title">Phone :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{data.Phone}}</span> </li>
+                            <li> <span class="title">Email :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{data.email}}</span> </li>
+                            <li> <span class="title">Instagram :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">@iscobaloch</span> </li>
+                            <li> <span class="title">languages :</span> <span class="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">{{data.languages}}</span> </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <a class="button" href="#">
+                            <span class="button-text">Download CV</span>
+                            <span class="button-icon fa fa-download"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Personal Info Ends -->
+            <!-- Boxes Starts -->
+            <div class="col-12 col-lg-7 col-xl-6 mt-5 mt-lg-0">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="box-stats with-margin">
+                            <h3 class="poppins-font position-relative">{{achievement.experience}}</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">years of <span class="d-block">experience</span></p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="box-stats with-margin">
+                            <h3 class="poppins-font position-relative">10</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">completed <span class="d-block">projects</span></p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="box-stats">
+                            <h3 class="poppins-font position-relative">20</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Happy<span class="d-block">customers</span></p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="box-stats">
+                            <h3 class="poppins-font position-relative">5</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">awards <span class="d-block">won</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Boxes Ends -->
+        </div>
+        <hr class="separator">
+        <!-- Skills Starts -->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase pb-4 pb-sm-5 mb-3 mb-sm-0 text-left text-sm-center custom-title ft-wt-600">My Skills</h3>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p90">
+                    <span>90%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">HTML</h6>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p60">
+                    <span>60%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">JAVASCRIPT</h6>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p73">
+                    <span>73%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">CSS</h6>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p68">
+                    <span>68%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">PHP</h6>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p82">
+                    <span>82%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">WORDPRESS-CMS</h6>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p25">
+                    <span>25%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">JQUERY</h6>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p35">
+                    <span>35%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">PYTHON</h6>
+            </div>
+            <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                <div class="c100 p55">
+                    <span>55%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">PHOTOSHOP</h6>
+            </div>
+        </div>
+        <!-- Skills Ends -->
+        <hr class="separator mt-1">
+        <!-- Experience & Education Starts -->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase pb-5 mb-0 text-left text-sm-center custom-title ft-wt-600">Experience <span>&</span> Education</h3>
+            </div>
+            <div class="col-lg-6 m-15px-tb">
+                <div class="resume-box">
+                    <ul>
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">2018 - Present</span>
+                            <h5 class="poppins-font text-uppercase">Web Developer <span class="place open-sans-font">Wordpress-Python Web</span></h5>
+                            <p class="open-sans-font">Responsibilities programming a website and designing its user interface, job entails more than coding and debugging. </p>
+                        </li>
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">2013 - 2018</span>
+                            <h5 class="poppins-font text-uppercase">UI/UX Designer <span class="place open-sans-font">Wordpress</span></h5>
+                            <p class="open-sans-font">The UI/UX Design Specialization brings a design-centric approach to user interface and user experience design, and offers practical, skill-based instruction</p>
+                        </li>
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">2016 - 2021</span>
+                            <h5 class="poppins-font text-uppercase">Artist Manager <span class="place open-sans-font">Social Media management</span></h5>
+                            <p class="open-sans-font">I worked with Nehaal Naseem, a pakistani singer managed her social handles, verified her social media networks</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6 m-15px-tb">
+                <div class="resume-box">
+                    <ul>
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-graduation-cap"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">2017-2021</span>
+                            <h5 class="poppins-font text-uppercase">Information Technologu <span class="place open-sans-font">University of Balochistan</span></h5>
+                            <p class="open-sans-font">Information technology is building communications networks for a company, safeguarding data and information, creating and administering databases</p>
+                        </li>
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-graduation-cap"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">2014-16</span>
+                            <h5 class="poppins-font text-uppercase">Intermediate <span class="place open-sans-font">BBISE, Quetta</span></h5>
+                            <p class="open-sans-font">Also Called,It is a two year program which comprises of two parts or two years of education namely 1st year and 2nd year.</p>
+                        </li>
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-graduation-cap"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">2012</span>
+                            <h5 class="poppins-font text-uppercase">Metriculation <span class="place open-sans-font">BBISE, Quetta</span></h5>
+                            <p class="open-sans-font">Completed my metriculation in science subject</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Experience & Education Ends -->
+    </div>
+</section>
+
+{% endblock %}

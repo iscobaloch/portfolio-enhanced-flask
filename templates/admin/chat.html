@@ -1,0 +1,101 @@
+{%extends "admin/base.html"%}
+{% block title%} CONTACT NOTIFICATION - ADMIN PANEL{% endblock %}
+   {% block body %}
+
+
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                            <li class="breadcrumb-item active">Help Chat</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Contact Chat</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Chats</h4>
+                                        <p class="text-muted font-14">
+                                          {% for message in get_flashed_messages()%}
+        <p style='color:green'>{{message}}</p>
+        {% endfor %}
+        {% if error %}
+        <p style='color:red'> {{error}}</p>
+        {% endif %}
+                                        </p>
+
+
+
+
+
+                                    <div class="tab-content">
+                                            <div class="tab-pane show active" id="basic-datatable-preview">
+                                                <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th hidden>S#</th>
+                                                            <th>NAME</th>
+                                                            <th>MOBILE</th>
+                                                            <th>EMAIL</th>
+                                                            <th>MESSAGE</th>
+            <th>TIME</th>
+                                                            <th>STATUS</th>
+                                                            </tr>
+                                                    </thead>
+
+
+                                                    <tbody>
+                                                      {% for r in r%}
+                                                      {% if r.Chat.sender>1 %}
+                                                      {% if r.Chat.status==2 %}
+                                                        <tr>
+                                                          <td hidden>{{loop.index}}</td>
+                                                            <td>{{r.User.fullname}}</td>
+                                                              <td>{{r.User.mobile}}</td>
+                                                                <td>{{r.User.email}}</td>
+                                                            <td>{{r.Chat.message}}</td>
+                                                            <td>{{r.Chat.time}}</td>
+                                                            <td>
+                                                              <form method="post">
+                                                              <input type="hidden" name="cht" id="cht" value="{{r.Chat.id}}">
+                                                              <input type="hidden" name="read" id="read" value="1">
+                                                              <input type="hidden" name="usr" value="{{r.Chat.uid}}">
+                                                              <input type="submit" class="btn btn-primary" name="" value="READ MESSAGE">
+                                                              </form>
+                                                            </td>
+                                                            {%endif%}
+
+{%endif%}
+                                                        </tr>{% endfor%}
+
+                                                    </tbody>
+                                                </table>
+                                            </div> <!-- end preview-->
+                                        </div> <!-- end tab-content-->
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div>
+                        <!-- end row-->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+
+                {% endblock %}

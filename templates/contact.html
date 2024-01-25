@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title%}Contact{% endblock %}
+{% block body %}
+
+
+<body class="contact">
+
+<!-- Page Title Starts -->
+<section class="title-section text-left text-sm-center revealator-slideup revealator-once revealator-delay1">
+
+    <h1> <span>Contact</span></h1>
+    <span class="title-bg">contact</span>
+</section>
+<!-- Page Title Ends -->
+<!-- Main Content Starts -->
+<section class="main-content revealator-slideup revealator-once revealator-delay1">
+    <div class="container">
+        <div class="row">
+            <!-- Left Side Starts -->
+            <div class="col-12 col-lg-4">
+                <h3 class="text-uppercase custom-title mb-0 ft-wt-600 pb-3">Get in Touch !</h3>
+                <p class="open-sans-font mb-3">One of the web designers who can match aesthetic abiility with a technical of web design. I am always open to discussing to new projects, creative ideas or opportunities to be part of your visions.</p>
+                <p class="open-sans-font custom-span-contact position-relative">
+                    <i class="fa fa-envelope-open position-absolute"></i>
+                    <span class="d-block">mail me</span>iscobaloch@gmail.com
+                </p>
+                <p class="open-sans-font custom-span-contact position-relative">
+                    <i class="fa fa-phone-square position-absolute"></i>
+                    <span class="d-block">call me</span>+92 305 847 7006 </b>
+                </p>
+                <ul class="social list-unstyled pt-1 mb-5">
+                    <li class="facebook"><a title="Facebook" href="https://www.facebook.com/wali.kubdani"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="twitter"><a title="Twitter" href="https://www.twitter.com/iscobaloch"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="youtube"><a title="Youtube" href="https://www.youtube.com/mkgaming"><i class="fa fa-youtube"></i></a>
+                    </li>
+                    <li class="dribbble"><a title="Dribbble" href="#"><i class="fa fa-dribbble"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Left Side Ends -->
+            <!-- Contact Form Starts -->
+            <div class="col-12 col-lg-8">
+                <form class="contactform" name="sentMessage" id="contactForm" action="/contact" method="post">
+                    <div class="contactform">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <input type="text" name="name" id="name" placeholder="YOUR NAME">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <input type="email" name="email" id="email" placeholder="YOUR EMAIL">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <input type="text" name="phone" id="phone" placeholder="YOUR PHONE NUMBER">
+                            </div>
+                            <div class="col-12">
+                                <textarea name="message" placeholder="YOUR MESSAGE"></textarea>
+                                <button type="submit" class="button" id="sendMessageButton">
+                                    <span class="button-text">Send Message</span>
+                                    <span class="button-icon fa fa-send"></span>
+                                </button>
+                            </div>
+                            <div class="col-12 form-message">
+                                <span class="output_message text-center font-weight-600 text-uppercase"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Contact Form Ends -->
+        </div>
+    </div>
+
+</section>
+{% endblock %}

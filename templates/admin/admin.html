@@ -1,0 +1,237 @@
+{%extends "admin/base.html"%}
+{% block title%}HOME - ADMIN PANEL {% endblock %}
+   {% block body %}
+
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                              <div class="row">
+                            <div class="col-xxl-3 col-lg-6">
+                                <div class="card widget-flat bg-success text-white">
+                                    <div class="card-body">
+                                        <div class="float-end">
+                                            <i class="mdi mdi-account-multiple widget-icon bg-white text-success"></i>
+                                        </div>
+                                        <h6 class="text-uppercase mt-0" title="Customers">Registared Users</h6>
+                                        <h3 class="mt-3 mb-3">{{member|count}}</h3>
+                                        <p class="mb-0">
+                                            <span class="badge badge-light-lighten me-1">
+                                                <i class="mdi mdi-arrow-up-bold"></i> </span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-xxl-3 col-lg-6">
+                                <div class="card widget-flat bg-primary text-white">
+                                    <div class="card-body">
+                                        <div class="float-end">
+                                            <i class="uil-award widget-icon bg-white text-primary"></i>
+                                        </div>
+                                        <h6 class="text-uppercase mt-0" title="Customers">Tours Booked</h6>
+                                        <h3 class="mt-3 mb-3">{{bkk|count}}</h3>
+                                        <p class="mb-0">
+                                            <span class="badge badge-light-lighten me-1">
+                                                <i class="mdi mdi-arrow-up-bold"></i> </span>
+                                            <span class="text-nowrap">Done successfully</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+                            <div class="col-xxl-3 col-lg-6">
+                                <div class="card widget-flat bg-warning text-white">
+                                    <div class="card-body">
+                                        <div class="float-end">
+                                            <i class="uil-bag widget-icon bg-white text-Warning"></i>
+                                        </div>
+                                        <h6 class="text-uppercase mt-0" title="Customers">Tour Packages</h6>
+                                        <h3 class="mt-3 mb-3">{{cats|count}}</h3>
+                                        <p class="mb-0">
+                                            <span class="badge badge-light-lighten me-1">
+                                                <i class="mdi mdi-arrow-up-bold"></i></span>
+                                            <span class="text-nowrap">Registerd in total</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+                            <div class="col-xxl-3 col-lg-6">
+                                <div class="card widget-flat bg-info text-white">
+                                    <div class="card-body">
+                                        <div class="float-end">
+                                            <i class="uil-envelope-download widget-icon bg-white text-info"></i>
+                                        </div>
+                                        <h6 class="text-uppercase mt-0" title="Customers">Messages Received</h6>
+                                        <h3 class="mt-3 mb-3">{{mgs|count}}</h3>
+                                        <p class="mb-0">
+                                            <span class="badge badge-light-lighten me-1">
+                                                <i class="mdi mdi-arrow-up-bold"></i></span>
+                                            <span class="text-nowrap">In last one week</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                        </div>
+                        <!-- end row-->
+
+
+
+
+                                    </div> <!-- end card-body -->
+                        <!-- end row-->
+
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <!-- Messages-->
+                                <div class="card">
+                                    <div class="card-body">
+                                    <a href="{{url_for('help')}}"><h4 class="header-title mb-3">ALL MESSAGES</h4></a>
+
+
+                                        <table class="table dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th hidden>S#</th>
+                                                    <th>SENDER</th>
+                                                    <th>MESSAGE</th>
+                                                    <th>TIME</th>
+                                                    <th>STATUS</th>
+
+                                                      </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                              {% for c in msg[0:6]%}
+                                                <tr>
+                                                  <td hidden>{{loop.index}}</td>
+                                                    <td>{{c.User.fullname}}</td>
+                                                    <td>{{c.Chat.message}}</td>
+                                                    <td>{{c.Chat.time}}</td>
+                                                    <td>  {% if c.Chat.status==1%}
+                                                      <span class="badge bg-success">SEEN</span>
+                                                      {% elif c.Chat.status==2%}
+                                                      <span class="badge bg-primary">UNREAD</span>
+                                                    </h3> {%endif%}</td>
+
+
+
+
+
+                                                </tr>{% endfor%}
+
+                                            </tbody>
+                                        </table>
+                                         <!-- end inbox-widget -->
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div>
+                            <!-- end col-->
+
+                            <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="{{url_for('manage_tours')}}"><h4 class="header-title mb-3">BOOKINGS</h4></a>
+                                        <table class="table dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th hidden>S#</th>
+                                                    <th>TOUR</th>
+                                                    <th>BOOKED</th>
+                                                    <th>MOBILE</th>
+                                                    <th>EMAIL</th>
+                                                    <th>STATUS</th>
+
+                                                      </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                              {% for b in booking[0:3]%}
+                                                <tr>
+                                                  <td hidden>{{loop.index}}</td>
+                                                    <td><a href="/trip_id={{b.Tbltourpackages.PackageId}}">{{b.Tbltourpackages.PackageName}}</a></td>
+                                                    <td>{{b.User.fullname}}</td>
+                                                    <td>{{b.User.mobile}}</td>
+                                                    <td>{{b.User.email}}</td>
+                                                    <td>  {% if b.Tblbooking.status==1%}
+                                                      <span class="badge bg-success">Approved</span>
+                                                      {% elif b.Tblbooking.status==2%}
+                                                      <span class="badge bg-danger">Disapproved</span>
+                                                      {%else%}
+
+                                                      <span class="badge bg-warning">Pending</span>
+                                                    </h3> {%endif%}</td>
+
+
+
+
+
+                                                </tr>{% endfor%}
+
+                                            </tbody>
+                                        </table>
+
+                                </div>
+                                <!-- end card-->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row-->
+
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card text-white bg-info overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="toll-free-box text-center">
+                                            <h4> <i class="mdi mdi-deskphone"></i> Email : Emailaddress@gmail.com</h4>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="card text-white bg-danger overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="toll-free-box text-center">
+                                            <h4> <i class="mdi mdi-headset"></i> Need help ? Just contact us</h4>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <h4> <i class="mdi mdi-deskphone"></i> Contact No : 1-234-567-8901</h4>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div>
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row-->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+                {% endblock %}

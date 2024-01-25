@@ -1,0 +1,134 @@
+{%extends "admin/base.html"%}
+{% block title%} ADD TOUR - ADMIN PANEL{% endblock %}
+   {% block body %}
+
+
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                          <li class="breadcrumb-item active">Add Tour</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                      <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <div class="mb-2">
+                                                <h4 class="header-title mt-2">Add Tour Details</h4>
+                                                <p class="text-muted font-14">Check all details before submission</p>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="input-types-preview">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <form method="post" enctype="multipart/form-data" action="{{url_for('add_tour')}}">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="title" class="form-label">TITLE</label>
+                                                                                        <input type="text" id="title" name="title" class="form-control" placeholder="TITLE FOR THE TOUR">
+                                                                                    </div>
+
+                                                                                    <div class="mb-3">
+                                                                                        <label for="location" class="form-label">TOUR LOCATION</label>
+                                                                                        <input type="text" id="location" name="location" class="form-control" placeholder="TOUR LOCATION">
+                                                                                    </div>
+
+                                                                                    <div class="mb-3">
+                                                                                        <label for="transport" class="form-label">TRANSPORT</label>
+                                                                                        <select class="form-select" id="transport" name="transport">
+                                                                                          <option readonly>TRANSPORT AVAILABLITY</option>
+
+                                                                                 <option value="1">YES</option>
+                                                                                  <option value="2">NO</option>
+                                                                                             </select>
+                                                                                    </div>
+
+                                                                                    <div class="mb-3">
+                                                                                        <label for="meal" class="form-label">MEAL</label>
+                                                                                        <select class="form-select" id="meal" name="meal">
+                                                                                          <option readonly>STANDARD MEAL</option>
+
+                                                                                 <option value="1">YES</option>
+                                                                                  <option value="2">NO</option>
+                                                                                             </select>
+                                                                                    </div>
+
+                                                                            </div> <!-- end col -->
+
+                                                                            <div class="col-lg-6">
+
+                                                                                    <div class="mb-3">
+                                                                                        <label for="duration" class="form-label">TOUR DURATION</label>
+                                                                                        <select class="form-select" id="duration" name="duration">
+                                                                                          <option readonly>SELECT DURATION</option>
+                                                                                            {% for i in range(30)%}
+                                                                                            {% set i=i+1%}
+                                                                                 <option value="{{i}}">{% if i<2 %} {{i}} day {% elif i>1 %} {{i}} days {% endif %}</option> {% endfor%}
+                                                                                             </select>
+                                                                                    </div>
+
+                                                                                    <div class="mb-3">
+                                                                                        <label for="image" class="form-label">LOCATION IMAGE</label>
+                                                                                        <input type="file" name="timage" id="timage" class="form-control">
+                                                                                    </div>
+
+                                                                                    <div class="mb-3">
+                                                                                      <label for="accommodation" class="form-label">ACCOMMODAATION</label>
+                                                                                      <select class="form-select" id="accommodation" name="accommodation">
+                                                                                        <option readonly>ACCOMMODATION AVAILABLITY</option>
+
+                                                                               <option value="1">YES</option>
+                                                                                <option value="2">NO</option>
+                                                                                           </select>
+                                                                                  </div>
+
+
+                                                                                    <div class="mb-3">
+                                                                                        <label for="price" class="form-label">TOUR PRICE</label>
+                                                                                        <input class="form-control" id="price" type="number" name="price" placeholder="TOUR COST PER PERSON">
+                                                                                    </div>
+
+
+                                                                            </div> <!-- end col -->
+                                                                        </div>
+                                                                        <!-- end row-->
+                                                                    </div>
+                                                                <label for="example-number" class="form-label">TOUR DETAILS</label>
+                                                   <div class="tab-content">
+                                                     <div class="tab-pane show active" id="hint-emoji-preview">
+                                                      <textarea name="editor" id="editor"></textarea>
+
+                                                        </div>
+                                                        <BR>
+
+                                                        <!-- end Snow-editor-->
+                                                    </div>
+                                                    <input type="submit" class="btn btn-primary btn-block" VALUE="POST NOW">
+                                                      </form>
+
+
+                                                     <!-- end preview-->
+            </div> <!-- end tab-content-->
+
+                                            </div>
+                                        </li>
+                                            </div>
+
+
+{% endblock %}

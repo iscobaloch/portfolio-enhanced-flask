@@ -1,0 +1,77 @@
+{%extends "admin/base.html"%}
+{% block title%} EDIT CONTACT INFO - ADMIN PANEL{% endblock %}
+   {% block body %}
+
+
+
+
+                        <!-- Start Content-->
+                        <div class="container-fluid">
+
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box">
+                                        <div class="page-title-right">
+                                            <ol class="breadcrumb m-0">
+                                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                                <li class="breadcrumb-item active">Edit Contact</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Edit Contact</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                          {% for message in get_flashed_messages()%}
+        <p style='color:green'>{{message}}</p>
+        {% endfor %}
+        {% if error %}
+        <p style='color:red'> {{error}}</p>
+        {% endif %}
+                                            </p>
+<!-- end nav-->
+                                            <div class="tab-content">
+                                                <div class="tab-pane show active" id="custom-styles-preview">
+                                                    <form class="needs-validation" novalidate="" method="post">
+                                                        <input type="hidden" class="form-control" id="validationCustom01" name="aid" value="{{a.id}}" >
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="validationCustom01">Email</label>
+                                                            <input type="text" class="form-control" id="validationCustom01" name="email" value="{{a.email}}" required="">
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="validationCustom02">Contact No</label>
+                                                            <input type="text" name="phone" class="form-control" id="validationCustom02" value="{{a.phone}}" required="">
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input" id="invalidCheck" required="">
+                                                                <label class="form-check-label form-label" for="invalidCheck">Agree to terms
+                                                                    and conditions</label>
+                                                                <div class="invalid-feedback">
+                                                                    You must agree before submitting.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-primary" type="submit">Submit form</button>
+                                                    </form>
+                                                </div> <!-- end preview-->
+            </div></div> <!-- end tab-content-->
+
+                                            </div>
+                                        </li>
+
+
+{% endblock %}
