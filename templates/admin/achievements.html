@@ -1,0 +1,85 @@
+{%extends "admin/base.html"%}
+{% block title%} MANAGE TOUR PACKAGES - ADMIN PANEL{% endblock %}
+   {% block body %}
+
+
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                            <li class="breadcrumb-item active">Tour Packages</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">EDUCATIONAL INFO</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">MANAGE EDUCATIONAL INFORMATION</h4>
+                                        {% for message in get_flashed_messages()%}
+      <p style='color:green'>{{message}}</p>
+      {% endfor %}
+      {% if error %}
+      <p style='color:red'> {{error}}</p>
+      {% endif %}
+                                    <div class="tab-content">
+                                            <div class="tab-pane show active" id="basic-datatable-preview">
+                                                <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                          <th hidden>S#</th>
+                                                            <th>S. NO</th>
+                                                            <th>DEGREE TITLE</th>
+                                                            <th>YEARS</th>
+                                                            <th>INSTITUTION</th>
+                                                            <th>ACTION</th>
+                                                            </tr>
+                                                    </thead>
+
+
+                                                    <tbody>
+                                                      {% for edu in edu%}
+                                                        <tr>
+                                                            <td>{{loop.index}}</td>
+                                                            <td>{{edu.degree}}</td>
+                                                            <td>{{edu.years}}</td>
+							 <td>{{edu.institute}}</td>
+							<td> <a href="/edit-skill/action_delete={{edu.id}}"><button type="button" class="btn btn-danger"><i class="mdi mdi-trash-can"></i> </button></a>
+                                                              <a href="/manage-skill/id={{edu.id}}/action=edit"><button type="button" class="btn btn-warning"><i class="mdi mdi-wrench"></i> </button></a>
+
+                                                            </td>
+
+
+
+                                                        </tr>{% endfor%}
+
+                                                    </tbody>
+                                                </table>
+                                            </div> <!-- end preview-->
+                                        </div> <!-- end tab-content-->
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div>
+                        <!-- end row-->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+
+                {% endblock %}
