@@ -65,15 +65,17 @@
 <!-- Main Content Starts -->
 <section class="container-fluid main-container container-home p-0 revealator-slideup revealator-once revealator-delay1">
     <div class="color-block d-none d-lg-block"></div>
+    {% set fname = 'img/' + info.img %}
     <div class="row home-details-container align-items-center">
-        <div class="col-lg-4 bg position-fixed d-none d-lg-block"></div>
+        <div class="col-lg-4 bg position-fixed d-none d-lg-block" style="background-image: url('{{ url_for('static', filename=fname) }}');"></div>
         <div class="col-12 col-lg-8 offset-lg-4 home-details text-left text-sm-center text-lg-left">
             <div>
                 {% if info %}
-                <img src="{{ url_for('static', filename=fname) }}" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none" alt="my picture" />
+                {% set fname = 'img/' + info.img %}
+                <img src="/static/img/img-mobile2.jpg" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none" alt="my picture" />
                 <h1 class="text-uppercase poppins-font">{{ info.fname}} {{ info.lname}}<span>{{ info.profession}}</span></h1>
                 {% endif %}
-                <p style="text-justify" class="open-sans-font" >I'm A web designer & front‑end developer focused on crafting clean & user‑friendly experiences, I am passionate about building excellent web applications. Welcome to my Website. I am a web developer striving my best to provide you with an unusual experience with flask, python. Some technologies never fade, Web development is one of those technologies.</p>
+                <p style="text-justify" class="open-sans-font" >{{ info.about}}</p>
                 <a class="button" href="{{url_for('about')}}">
                     <span class="button-text">more about me</span>
                     <span class="button-icon fa fa-arrow-right"></span>

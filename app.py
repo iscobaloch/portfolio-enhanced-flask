@@ -44,6 +44,7 @@ def home():
     info = Users.query.order_by(Users.id).first()
     return render_template("index.html", info=info)
 
+# about page
 @app.route("/about", methods=['GET'])
 def about():
     info = Users.query.order_by(Users.id).first()
@@ -61,10 +62,10 @@ def portfolio():
 
     return render_template("portfolio.html")
 
-# @app.route("/login", methods=['GET'])
-# def login():
-#
-#     return render_template("login.html")
+@app.route("/test", methods=['GET'])
+def test():
+
+    return render_template("login.html")
 
 @app.route("/blog", methods=['GET'])
 def blog():
@@ -165,7 +166,7 @@ def login():
              return render_template("admin/pages-login.html")
 
 
-#  Admin - EDIT TOUR INFORMATION
+#  Admin - EDIT PROFILE INFORMATION
 @app.route('/profile', methods=['POST', 'GET'])
 def Prof():
     if session.get('admin'):
@@ -190,7 +191,7 @@ def Prof():
                 updte.info = editor
                 db.session.commit()
                 flash("CHANGES WERE MADE SUCCESSFULLY")
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('Prof'))
             else:
                 updte = db.session.query(Users).filter_by(id=session.get('aid')).first()
                 updte.fname = fname
@@ -211,7 +212,25 @@ def Prof():
         flash('LOGIN FIRST TO PROCEED')
         return redirect(url_for('login'))
 
-#  Infor Page admin
+@app.route("/add-skill", methods=['POST','GET'])
+def add_skill():
+    if session.get('admin'):
+        if request.method == 'POST':
+            skill = request.form.get('skill')
+            percent= request.form.get('percent')
+            skill = Skills(skill=skill, percent=percent, uid=session.get('aid'))
+            db2.session.add(skill)
+            db2.session.commit()
+            flash("SKILL ADDED SUCCESSFULLY")
+            return redirect(url_for('manage_skills'))
+        else:
+            return render_template("admin/add-skill.html")
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return render_template("admin/pages-login.html")
+
+
+#  Info Page admin
 @app.route('/info', methods=['POST', 'GET'])
 def info():
     if session.get('admin'):
@@ -255,6 +274,39 @@ def info():
                 return render_template("admin/info.html",t=t)
             else:
                 return render_template('404.html')
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return redirect(url_for('login'))
+
+# Admin manage skills
+@app.route("/manage-skills")
+def manage_skills():
+    if session.get('admin'):
+        skills = Skills.query.order_by(Skills.id.desc()).all()
+
+        return render_template("admin/skills.html",skills=skills)
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return redirect(url_for('login'))
+
+# Admin manage skills
+@app.route("/manage-education")
+def manage_education():
+    if session.get('admin'):
+        edu = Education.query.order_by(Education.id.desc()).all()
+
+        return render_template("admin/education.html",edu=edu   )
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return redirect(url_for('login'))
+
+# Manage Experience ADMIN
+@app.route("/manage-experience")
+def manage_experience():
+    if session.get('admin'):
+        exp = Work.query.order_by(Work.id.desc()).all()
+
+        return render_template("admin/experience.html", exp=exp   )
     else:
         flash('LOGIN FIRST TO PROCEED')
         return redirect(url_for('login'))

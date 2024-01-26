@@ -95,22 +95,54 @@
                                 <i class="uil-comment-alt"></i>
                                 {%if noti%}
                                 <span class="badge bg-success float-end">1s</span> {%endif%}
-                                <span> Profile </span>
+                                <span>  </span>
                             </a>
                         </li>
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#Tourpackages" aria-expanded="false" aria-controls="Tourpackages" class="side-nav-link">
                                 <i class="uil-store"></i>
-                                <span> Tour Packages </span>
+                                <span> Skills </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <div class="collapse" id="Tourpackages">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="{{url_for('add_tour')}}">Add Tour</a>
+                                        <a href="{{url_for('add_skill')}}">Add Skill</a>
                                     </li>
                                     <li>
-                                        <a href="{{url_for('manage_tours')}}">Manage Tours</a>
+                                        <a href="{{url_for('manage_skills')}}">Manage Skills</a>
+                                    </li>
+                                    </ul>
+                            </div>
+                        </li>
+                           <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#Education" aria-expanded="false" aria-controls="Tourpackages" class="side-nav-link">
+                                <i class="uil-books"></i>
+                                <span> Education </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="Education">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{url_for('add_skill')}}">Add Education</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url_for('manage_education')}}">Manage Education</a>
+                                    </li>
+                                    </ul>
+                                      <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#Work" aria-expanded="false" aria-controls="Tourpackages" class="side-nav-link">
+                                <i class="uil-laptop"></i>
+                                <span> Work Experience </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="Work">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{url_for('add_skill')}}">Add Work</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url_for('manage_experience')}}">Work History</a>
                                     </li>
                                     </ul>
                             </div>
