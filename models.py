@@ -57,6 +57,33 @@ class About(db.Model):
     email = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100), nullable=False)
 
+class Skills(db2.Model):
+    __bind_key__ = 'wali'
+    __tablename__ = 'Skills'
+    id = db2.Column(db2.Integer, primary_key=True)
+    uid = db2.Column(db2.Integer, nullable=False)
+    skill = db2.Column(db2.String(100), nullable=False)
+    percent = db2.Column(db2.Integer, nullable=False)
+
+class Education(db2.Model):
+    __bind_key__ = 'wali'
+    __tablename__ = 'Education'
+    id = db2.Column(db2.Integer, primary_key=True)
+    uid = db2.Column(db2.Integer, nullable=False)
+    degree = db2.Column(db2.String(100), nullable=False)
+    years = db2.Column(db2.String(100), nullable=False)
+    institute = db2.Column(db2.String(100), nullable=False)
+    description = db2.Column(db2.String(100), nullable=False)
+
+class Work(db2.Model):
+    __bind_key__ = 'wali'
+    __tablename__ = 'work'
+    id = db2.Column(db2.Integer, primary_key=True)
+    uid = db2.Column(db2.Integer, nullable=False)
+    designation = db2.Column(db2.String(100), nullable=False)
+    years = db2.Column(db2.String(100), nullable=False)
+    org = db2.Column(db2.String(100), nullable=False)
+    description = db2.Column(db2.String(500), nullable=False)
 #
 class Users(db2.Model):
     __bind_key__ = 'wali'

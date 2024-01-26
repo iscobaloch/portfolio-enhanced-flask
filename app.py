@@ -49,12 +49,16 @@ def about():
     info = Users.query.order_by(Users.id).first()
     data = db2.session.query(Info).filter(Info.uid == 1).first()
     achievement = db2.session.query(Achievements).filter(Achievements.uid == 1).first()
-    return render_template("about.html", info=info, data=data, achievement=achievement)
+    skills = db2.session.query(Skills).filter(Skills.uid == 1).all()
+    edu = db2.session.query(Education).filter(Education.uid == 1).all()
+    exp = db2.session.query(Work).filter(Work.uid == 1).order_by(Work.id.desc()).all()
+    return render_template("about.html",exp=exp, edu=edu, skills=skills, info=info, data=data, achievement=achievement)
 
 
 
 @app.route("/portfolio", methods=['GET'])
 def portfolio():
+
     return render_template("portfolio.html")
 
 # @app.route("/login", methods=['GET'])

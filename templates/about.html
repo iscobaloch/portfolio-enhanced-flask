@@ -92,87 +92,17 @@
             <div class="col-12">
                 <h3 class="text-uppercase pb-4 pb-sm-5 mb-3 mb-sm-0 text-left text-sm-center custom-title ft-wt-600">My Skills</h3>
             </div>
+            {% for skills in skills %}
             <div class="col-6 col-md-3 mb-3 mb-sm-5">
                 <div class="c100 p90">
-                    <span>90%</span>
+                    <span>{{skills.percent}}%</span>
                     <div class="slice">
                         <div class="bar"></div>
                         <div class="fill"></div>
                     </div>
                 </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">HTML</h6>
-            </div>
-            <div class="col-6 col-md-3 mb-3 mb-sm-5">
-                <div class="c100 p60">
-                    <span>60%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">JAVASCRIPT</h6>
-            </div>
-            <div class="col-6 col-md-3 mb-3 mb-sm-5">
-                <div class="c100 p73">
-                    <span>73%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">CSS</h6>
-            </div>
-            <div class="col-6 col-md-3 mb-3 mb-sm-5">
-                <div class="c100 p68">
-                    <span>68%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">PHP</h6>
-            </div>
-            <div class="col-6 col-md-3 mb-3 mb-sm-5">
-                <div class="c100 p82">
-                    <span>82%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">WORDPRESS-CMS</h6>
-            </div>
-            <div class="col-6 col-md-3 mb-3 mb-sm-5">
-                <div class="c100 p25">
-                    <span>25%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">JQUERY</h6>
-            </div>
-            <div class="col-6 col-md-3 mb-3 mb-sm-5">
-                <div class="c100 p35">
-                    <span>35%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">PYTHON</h6>
-            </div>
-            <div class="col-6 col-md-3 mb-3 mb-sm-5">
-                <div class="c100 p55">
-                    <span>55%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">PHOTOSHOP</h6>
-            </div>
-        </div>
+                <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">{{skills.skill}}</h6>
+            </div>{% endfor%}
         <!-- Skills Ends -->
         <hr class="separator mt-1">
         <!-- Experience & Education Starts -->
@@ -182,64 +112,33 @@
             </div>
             <div class="col-lg-6 m-15px-tb">
                 <div class="resume-box">
-                    <ul>
+                    <ul>{% for exp in exp %}
                         <li>
                             <div class="icon">
                                 <i class="fa fa-briefcase"></i>
                             </div>
-                            <span class="time open-sans-font text-uppercase">2018 - Present</span>
-                            <h5 class="poppins-font text-uppercase">Web Developer <span class="place open-sans-font">Wordpress-Python Web</span></h5>
-                            <p class="open-sans-font">Responsibilities programming a website and designing its user interface, job entails more than coding and debugging. </p>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <i class="fa fa-briefcase"></i>
-                            </div>
-                            <span class="time open-sans-font text-uppercase">2013 - 2018</span>
-                            <h5 class="poppins-font text-uppercase">UI/UX Designer <span class="place open-sans-font">Wordpress</span></h5>
-                            <p class="open-sans-font">The UI/UX Design Specialization brings a design-centric approach to user interface and user experience design, and offers practical, skill-based instruction</p>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <i class="fa fa-briefcase"></i>
-                            </div>
-                            <span class="time open-sans-font text-uppercase">2016 - 2021</span>
-                            <h5 class="poppins-font text-uppercase">Artist Manager <span class="place open-sans-font">Social Media management</span></h5>
-                            <p class="open-sans-font">I worked with Nehaal Naseem, a pakistani singer managed her social handles, verified her social media networks</p>
-                        </li>
+                            <span class="time open-sans-font text-uppercase">{{exp.years}}</span>
+                            <h5 class="poppins-font text-uppercase">{{exp.designation}} <span class="place open-sans-font">{{exp.org}}</span></h5>
+                            <p class="open-sans-font">{{exp.description}}</p>
+                        </li>{% endfor%}
+                        
                     </ul>
                 </div>
             </div>
+           
             <div class="col-lg-6 m-15px-tb">
                 <div class="resume-box">
                     <ul>
-                        <li>
+                        <li> {% for edu in edu %}
                             <div class="icon">
                                 <i class="fa fa-graduation-cap"></i>
                             </div>
-                            <span class="time open-sans-font text-uppercase">2017-2021</span>
-                            <h5 class="poppins-font text-uppercase">Information Technologu <span class="place open-sans-font">University of Balochistan</span></h5>
-                            <p class="open-sans-font">Information technology is building communications networks for a company, safeguarding data and information, creating and administering databases</p>
+                            <span class="time open-sans-font text-uppercase">{{edu.years}}</span>
+                            <h5 class="poppins-font text-uppercase">{{edu.degree}}<span class="place open-sans-font">{{edu.institute}}</span></h5>
+                            <p class="open-sans-font">{{edu.description}}</p>
                         </li>
-                        <li>
-                            <div class="icon">
-                                <i class="fa fa-graduation-cap"></i>
-                            </div>
-                            <span class="time open-sans-font text-uppercase">2014-16</span>
-                            <h5 class="poppins-font text-uppercase">Intermediate <span class="place open-sans-font">BBISE, Quetta</span></h5>
-                            <p class="open-sans-font">Also Called,It is a two year program which comprises of two parts or two years of education namely 1st year and 2nd year.</p>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <i class="fa fa-graduation-cap"></i>
-                            </div>
-                            <span class="time open-sans-font text-uppercase">2012</span>
-                            <h5 class="poppins-font text-uppercase">Metriculation <span class="place open-sans-font">BBISE, Quetta</span></h5>
-                            <p class="open-sans-font">Completed my metriculation in science subject</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                        <li>{% endfor%}
+                           
         </div>
         <!-- Experience & Education Ends -->
     </div>
