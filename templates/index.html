@@ -75,7 +75,7 @@
                 <img src="/static/img/img-mobile2.jpg" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none" alt="my picture" />
                 <h1 class="text-uppercase poppins-font">{{ info.fname}} {{ info.lname}}<span>{{ info.profession}}</span></h1>
                 {% endif %}
-                <p style="text-justify" class="open-sans-font" >{{ info.about}}</p>
+                <p style="text-justify" class="open-sans-font" >{{ info.about |safe }}</p>
                 <a class="button" href="{{url_for('about')}}">
                     <span class="button-text">more about me</span>
                     <span class="button-icon fa fa-arrow-right"></span>

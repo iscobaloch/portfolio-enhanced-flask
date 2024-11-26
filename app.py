@@ -16,7 +16,7 @@ db = SQLAlchemy()
 app.config['WTF_CSRF_SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://wali:wali123@localhost:3306/tms"
 app.config['SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
-app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static/img/')
+app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static/img//')
 
 # Configuration for the second database
 app.config["SQLALCHEMY_BINDS"] = {
@@ -26,7 +26,8 @@ db2 = SQLAlchemy(app)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-
+with app.app_context():
+    db.create_all()
 
 # Initialize
 db.init_app(app)
@@ -171,47 +172,55 @@ def login():
 def Prof():
     if session.get('admin'):
         if request.method == 'POST':
-            img= request.files.get('img')
+            img = request.files.get('img')  # Get the uploaded image
             fname = request.form.get('fname')
             lname = request.form.get('lname')
             profession = request.form.get('profession')
             address = request.form.get('address')
             editor = request.form.get('editor')
-            me= Users.query.filter_by(id=session.get('aid')).first()
+
+            me = Users.query.filter_by(id=session.get('aid')).first()
             _, file_extension = os.path.splitext(img.filename)
-            if ('.jpg' or '.jpeg' or '.png') in file_extension:
+
+            # Check if the uploaded image has a valid extension (jpg, jpeg, png)
+            if file_extension.lower() in ['.jpg', '.jpeg', '.png']:
                 updte = db.session.query(Users).filter_by(id=session.get('aid')).first()
-                os.remove(app.config['UPLOAD_FOLDER']+updte.img)
-                updte.id = session.get('aid')
+
+                # Remove the old image if it exists (avoid breaking the app if file doesn't exist)
+                if updte.img:
+                    old_img_path = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], updte.img)
+                    if os.path.exists(old_img_path):
+                        os.remove(old_img_path)
+
+                # Save the new image and get the filename
+                new_img_filename = save_images(img)
+
+                # Update the user data
                 updte.fname = fname
                 updte.lname = lname
-                updte.img = save_images(request.files.get('img'))
+                updte.img = new_img_filename  # Store the image filename (not the FileStorage object)
                 updte.profession = profession
                 updte.address = address
                 updte.info = editor
+
                 db.session.commit()
+
                 flash("CHANGES WERE MADE SUCCESSFULLY")
                 return redirect(url_for('Prof'))
             else:
-                updte = db.session.query(Users).filter_by(id=session.get('aid')).first()
-                updte.fname = fname
-                updte.lname = lname
-                updte.img = me.img
-                updte.profession = profession
-                updte.info = editor
-                db.session.commit()
-                flash("POST AS BEEN UPDATED")
-                return redirect(url_for('manage_tours'))
+                flash("Invalid file type. Please upload a valid image (JPG, JPEG, PNG).")
+                return redirect(url_for('Prof'))
         else:
-            t = db.session.query(Users).filter(Users.id==session.get('aid')).first()
+            t = db.session.query(Users).filter(Users.id == session.get('aid')).first()
             if t:
-                return render_template("admin/user.html",t=t)
+                return render_template("admin/user.html", t=t)
             else:
                 return render_template('404.html')
     else:
         flash('LOGIN FIRST TO PROCEED')
         return redirect(url_for('login'))
 
+#Add Skills
 @app.route("/add-skill", methods=['POST','GET'])
 def add_skill():
     if session.get('admin'):
@@ -225,6 +234,47 @@ def add_skill():
             return redirect(url_for('manage_skills'))
         else:
             return render_template("admin/add-skill.html")
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return render_template("admin/pages-login.html")
+
+
+@app.route("/add-education", methods=['POST','GET'])
+def add_education():
+    if session.get('admin'):
+        if request.method == 'POST':
+            degree = request.form.get('degree')
+            years= request.form.get('years')
+            institute = request.form.get('institute')
+            description = request.form.get('description')
+            education = Education(degree=degree, years=years, institute=institute, description=description, uid=session.get('aid'))
+            db2.session.add(education)
+            db2.session.commit()
+            flash("EDUCATION ADDED SUCCESSFULLY")
+            return redirect(url_for('manage_education'))
+        else:
+            return render_template("admin/add-education.html")
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return render_template("admin/pages-login.html")
+
+
+#Add Work
+@app.route("/add-experience", methods=['POST','GET'])
+def add_experience():
+    if session.get('admin'):
+        if request.method == 'POST':
+            designation = request.form.get('designation')
+            years= request.form.get('years')
+            org = request.form.get('org')
+            description = request.form.get('description')
+            experience = Work(designation=designation, years=years, org=org, description=description, uid=session.get('aid'))
+            db2.session.add(experience)
+            db2.session.commit()
+            flash("EXPERIENCE ADDED SUCCESSFULLY")
+            return redirect(url_for('manage_experience'))
+        else:
+            return render_template("admin/add-experience.html")
     else:
         flash('LOGIN FIRST TO PROCEED')
         return render_template("admin/pages-login.html")
@@ -289,7 +339,52 @@ def manage_skills():
         flash('LOGIN FIRST TO PROCEED')
         return redirect(url_for('login'))
 
-# Admin manage skills
+
+#Edit Skills
+@app.route("/manage-skill/id=<id>/action=edit", methods=['POST', 'GET'])
+def edit_skills(id):
+    if session.get('admin'):
+        if request.method == 'POST':
+            skill = request.form.get('skill')
+            percent = request.form.get('percent')
+            hello= Skills.query.filter_by(id=id).first()
+            updte = db.session.query(Skills).filter_by(id=id).first()
+            updte.skill = skill
+            updte.percent = percent
+            db.session.commit()
+            flash("CHANGES WERE MADE SUCCESSFULLY")
+            return redirect(url_for('manage_skills'))
+        else:
+            t = db.session.query(Skills).filter(Skills.id==id).first()
+            if t:
+                return render_template("admin/edit-skills.html", id=id,t=t)
+            else:
+                return render_template('404.html')
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return redirect(url_for('login'))
+
+
+#Delete Skill
+@app.route("/edit-skill/action_delete=<int:id>", methods=['POST','GET'])
+def delete_skill(id):
+    if session.get('admin'):
+        post = db.session.query(Skills).filter_by(id=id).first()
+        if post is None:
+            flash("This Item is Already Deleted")
+            return redirect(url_for('manage_skills'))
+        else:
+            record= db.session.query(Skills).filter_by(id=id).first()
+            db.session.delete(record)
+            db.session.commit()
+            flash('Skill Has been Deleted Successfully')
+            return redirect(url_for('manage_skills'))
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return render_template("admin/pages-login.html")
+
+
+# Admin manage education
 @app.route("/manage-education")
 def manage_education():
     if session.get('admin'):
@@ -299,6 +394,36 @@ def manage_education():
     else:
         flash('LOGIN FIRST TO PROCEED')
         return redirect(url_for('login'))
+
+#Edit Education
+@app.route("/manage-education/id=<id>/action=edit", methods=['POST', 'GET'])
+def edit_education(id):
+    if session.get('admin'):
+        if request.method == 'POST':
+            degree = request.form.get('degree')
+            years = request.form.get('years')
+            institute = request.form.get('institute')
+            description = request.form.get('description')
+            hello= Education.query.filter_by(id=id).first()
+            updte = db.session.query(Education).filter_by(id=id).first()
+            updte.skill = degree
+            updte.percent = years
+            updte.institute = institute
+            updte.description = description
+            db.session.commit()
+            flash("CHANGES WERE MADE SUCCESSFULLY")
+            return redirect(url_for('manage_education'))
+        else:
+            t = db.session.query(Education).filter(Education.id==id).first()
+            if t:
+                return render_template("admin/edit-education.html", id=id,t=t)
+            else:
+                return render_template('404.html')
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return redirect(url_for('login'))
+
+
 
 # Manage Experience ADMIN
 @app.route("/manage-experience")
@@ -311,6 +436,51 @@ def manage_experience():
         flash('LOGIN FIRST TO PROCEED')
         return redirect(url_for('login'))
 
+#Edit Work Experience
+@app.route("/manage-experience/id=<id>/action=edit", methods=['POST', 'GET'])
+def edit_experience(id):
+    if session.get('admin'):
+        if request.method == 'POST':
+            designation = request.form.get('designation')
+            years = request.form.get('years')
+            org = request.form.get('org')
+            description = request.form.get('description')
+            hello= Work.query.filter_by(id=id).first()
+            updte = db.session.query(Work).filter_by(id=id).first()
+            updte.designation = designation
+            updte.years = years
+            updte.org = org
+            updte.description = description
+            db.session.commit()
+            flash("CHANGES WERE MADE SUCCESSFULLY")
+            return redirect(url_for('manage_experience'))
+        else:
+            t = db.session.query(Work).filter(Work.id==id).first()
+            if t:
+                return render_template("admin/edit-experience.html", id=id,t=t)
+            else:
+                return render_template('404.html')
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return redirect(url_for('login'))
+
+#Delete Education record
+@app.route("/edit-education/action_delete=<int:id>", methods=['POST','GET'])
+def delete_education(id):
+    if session.get('admin'):
+        post = db.session.query(Education).filter_by(id=id).first()
+        if post is None:
+            flash("This Item is Already Deleted")
+            return redirect(url_for('manage_education'))
+        else:
+            record= db.session.query(Education).filter_by(id=id).first()
+            db.session.delete(record)
+            db.session.commit()
+            flash('Education Record Has been Deleted Successfully')
+            return redirect(url_for('manage_education'))
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return render_template("admin/pages-login.html")
 #
 # # User - User Login Page
 # @app.route("/login" , methods=['POST','GET'])
