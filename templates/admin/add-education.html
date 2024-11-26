@@ -1,0 +1,93 @@
+{%extends "admin/base.html"%}
+{% block title%} EDIT TOUR INFO - ADMIN PANEL{% endblock %}
+   {% block body %}
+
+
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                          <li class="breadcrumb-item active">Edit Tour</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                      <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <div class="mb-2">
+                                                <h4 class="header-title mt-2">Edit Tour Details</h4>
+                                                <p class="text-muted font-14">Check all details before submission</p>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="input-types-preview">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <form method="post" enctype="multipart/form-data">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="title" class="form-label">DEGREE FULL TITLE</label>
+                                                                                        <input type="text" id="degree" name="degree" class="form-control" required>
+                                                                                    </div>
+                                                                                     <div class="mb-3">
+                                                                                        <label for="title" class="form-label">INSTITUTION</label>
+                                                                                        <input type="text" id="institute" name="institute" class="form-control" required>
+                                                                                    </div>
+                                    
+
+                                                                            </div> <!-- end col -->
+
+                                                                            <div class="col-lg-6">
+
+                                                                                    <div class="mb-3">
+                                                                                        <label for="duration" class="form-label">EXPERIENCE DURATION</label>
+                                                                                             <input type="text" id="years" name="years" class="form-control" required>
+                                                                                    </div>
+                                                                                     <div class="mb-3">
+                                                                                        <label for="duration" class="form-label">DESCRIPTION</label>
+                                                                                             <input type="text" id="description" name="description" class="form-control" required>
+                                                                                    </div>
+
+
+                                                                            </div> <!-- end col -->
+                                                                        </div>
+                                                                        <!-- end row-->
+                                                                    </div>
+                                                                                      <BR>
+
+                                                        <!-- end Snow-editor-->
+                                                    </div>
+                                                    
+                                                    <input type="submit" class="btn btn-primary btn-block center" VALUE="ADD SKILL">
+                                                      </form>
+
+
+                                                                                      <BR>
+                                                                                      <BR>
+                                                                                      <BR>
+                                                                                      <BR>
+                                                                                      <BR>
+                                                                                      <BR>
+                                                                                      <BR>
+                                                     <!-- end preview-->
+            </div> <!-- end tab-content-->
+
+                                            </div>
+                                        </li>
+
+
+{% endblock %}
