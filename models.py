@@ -108,6 +108,29 @@ class Info(db2.Model):
     languages = db2.Column(db2.String(200), nullable=False)
     freelance = db2.Column(db2.String(100), nullable=False)
 
+class Portfolio(db2.Model):
+    __bind_key__ = 'wali'
+    __tablename__ = 'portfolio'
+    id = db2.Column(db2.Integer, primary_key=True)
+    uid = db2.Column(db2.String(100), nullable=False)
+    category = db2.Column(db2.String(100), nullable=False)
+    project = db2.Column(db2.String(100), nullable=False)
+    client = db2.Column(db2.String(200), nullable=False)
+    website = db2.Column(db2.String(200), nullable=False)
+    progr = db2.Column(db2.String(50), nullable=False)
+    thumb = db2.Column(db2.String(200), nullable=False)
+
+class Resume(db2.Model):
+    __bind_key__ = 'wali'
+    __tablename__ = 'resume'
+    id = db2.Column(db2.Integer, primary_key=True)
+    uid = db2.Column(db2.String(100), nullable=False)
+    rname = db2.Column(db2.String(100), nullable=False)
+    resume = db2.Column(db2.String(100), nullable=False)
+    update_time = db2.Column(db2.TIMESTAMP, default=datetime.utcnow,
+                             onupdate=datetime.utcnow, nullable=False)
+
+
 class Achievements(db2.Model):
     __bind_key__ = 'wali'
     __tablename__ = 'achievements'
