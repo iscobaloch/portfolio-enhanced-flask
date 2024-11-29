@@ -10,6 +10,8 @@ from datetime import datetime
 from datetime import timedelta
 from passlib.hash import pbkdf2_sha256
 from datetime import datetime
+from jinja2 import Markup
+import re
 import secrets
 import sqlite3
 from models import *
@@ -23,6 +25,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://wali:wali123@localhost:
 app.config['SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
 app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static/img//')
 app.config['UPLOAD_FOLDER_DOC'] = os.path.join(basedir, 'static/docs/')
+app.config['UPLOAD_FOLDER_THUMB'] = os.path.join(basedir, 'static/')
 
 # Configuration for the second database
 app.config["SQLALCHEMY_BINDS"] = {
@@ -44,10 +47,36 @@ def save_images(photo):
     return photo_name
 
 
+#Blog Photos Save
+def save_blog_thumb(photo):
+    # Generate a secure hash for the photo
+    hash_photo = secrets.token_urlsafe(20)
+
+    # Extract file extension
+    _, file_extension = os.path.splitext(photo.filename)
+
+    # Generate the new file name
+    photo_name = hash_photo + file_extension
+
+    # Define the 'blog_thumb' folder
+    file_folder = 'blog_thumb'
+
+    # Build the full path to save the image
+    file_path = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER_THUMB'], file_folder, photo_name)
+
+    # Ensure the 'blog_thumb' folder exists
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    # Save the image to the defined path
+    photo.save(file_path)
+
+    return photo_name
+
+
 @app.route('/download_resume/<filename>')
 def download_resume(filename):
     # Define the folder where resumes are stored (this should match the upload folder)
-    resume_folder = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'])
+    resume_folder = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER_DOC'])
 
     # Construct the full file path
     file_path = os.path.join(resume_folder, filename)
@@ -84,7 +113,7 @@ def save_document(doc):
     doc_name = hash_doc + file_extension
 
     # Set the file path where the document will be saved
-    file_path = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], doc_name)
+    file_path = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER_DOC'], doc_name)
 
     # Save the document to the file system
     doc.save(file_path)
@@ -96,6 +125,48 @@ def save_document(doc):
 def home():
     info = Users.query.order_by(Users.id).first()
     return render_template("index.html", info=info)
+
+#Post Detailed
+@app.route("/post/<int:id>", methods=['GET'])
+def post(id):
+    blog = db2.session.query(Blog).filter(Blog.id == id).first()
+
+    return render_template("post.html", blog=blog, id=id)
+
+# Add Blog Post
+@app.route("/add-post", methods=['POST', 'GET'])
+def add_post():
+    if session.get('admin'):
+        if request.method == 'POST':
+            ptitle = request.form.get('ptitle')
+            ptags = request.form.get('ptags')
+            post = request.form.get('editor')
+            thumb = request.files.get('thumb')  # Get the uploaded image
+
+            # Verify the file extension
+            _, file_extension = os.path.splitext(thumb.filename)
+
+            # Check if the uploaded file has a valid image extension (jpg, jpeg, png)
+            if file_extension.lower() not in ['.jpg', '.jpeg', '.png']:
+                flash("Invalid file type. Please upload a valid image (JPG, JPEG, PNG).")
+                return redirect(url_for('add_post'))
+
+            # Save the image and get the hashed filename
+            filename = save_blog_thumb(thumb)
+
+            # Create the post and add it to the database
+            post = Blog(title=ptitle, tags=ptags, thumb=filename, post=post, date=datetime.now())
+            db2.session.add(post)
+            db2.session.commit()
+
+            flash("POST ADDED SUCCESSFULLY")
+            return redirect(url_for('manage_skills'))
+        else:
+            return render_template("admin/add-post.html")
+    else:
+        flash('LOGIN FIRST TO PROCEED')
+        return render_template("admin/pages-login.html")
+
 
 # about page
 @app.route("/about", methods=['GET'])
@@ -122,10 +193,35 @@ def test():
 
     return render_template("login.html")
 
+# Custom filter to truncate text with HTML tags intact
+def truncate_html(value, length=125):
+    # Remove any HTML tags from the content to count characters correctly
+    stripped_text = re.sub(r'<.*?>', '', value)
+    if len(stripped_text) > length:
+        # Truncate the text but keep HTML tags intact
+        truncated_text = stripped_text[:length] + '...'
+        # Return the truncated content as safe HTML
+        return Markup(truncated_text)
+    return Markup(value)
+
+# Register the custom filter with Jinja2
+app.jinja_env.filters['truncate_html'] = truncate_html
+
 @app.route("/blog", methods=['GET'])
 def blog():
+    # Get the current page number from the URL (defaults to 1)
+    page = request.args.get('page', 1, type=int)
 
-    return render_template("blog.html")
+    # Query to get blog posts, paginate with 6 posts per page
+    posts = Blog.query.order_by(Blog.date.desc()).paginate(page, 6, False)
+
+    # Get the pagination info
+    next_url = url_for('blog', page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('blog', page=posts.prev_num) if posts.has_prev else None
+
+    # Pass the entire pagination object to the template
+    return render_template("blog.html", blog=posts, next_url=next_url, prev_url=prev_url, page=page)
+
 #
 # # Guest - Home Page
 # @app.route("/")
@@ -344,7 +440,7 @@ def add_experience():
 
 
 #  Info Page admin
-@app.route('/info', methods=['POST', 'GET'])
+@app.route('/information', methods=['POST', 'GET'])
 def info():
     if session.get('admin'):
         if request.method == 'POST':
@@ -429,7 +525,7 @@ def edit_skills(id):
 
 
 #Delete Skill
-@app.route("/edit-skill/action_delete=<int:id>", methods=['POST','GET'])
+@app.route("/manage-skill/action-delete=<int:id>", methods=['POST','GET'])
 def delete_skill(id):
     if session.get('admin'):
         post = db.session.query(Skills).filter_by(id=id).first()
@@ -528,7 +624,7 @@ def edit_experience(id):
         return redirect(url_for('login'))
 
 #Delete Education record
-@app.route("/edit-education/action_delete=<int:id>", methods=['POST','GET'])
+@app.route("/manage-education/action-delete=<int:id>", methods=['POST'])
 def delete_education(id):
     if session.get('admin'):
         post = db.session.query(Education).filter_by(id=id).first()
@@ -536,7 +632,7 @@ def delete_education(id):
             flash("This Item is Already Deleted")
             return redirect(url_for('manage_education'))
         else:
-            record= db.session.query(Education).filter_by(id=id).first()
+            record = db.session.query(Education).filter_by(id=id).first()
             db.session.delete(record)
             db.session.commit()
             flash('Education Record Has been Deleted Successfully')
@@ -544,6 +640,7 @@ def delete_education(id):
     else:
         flash('LOGIN FIRST TO PROCEED')
         return render_template("admin/pages-login.html")
+
 
 # Manage Portfolio
 @app.route("/manage-portfolio")
@@ -588,7 +685,7 @@ def add_portfolio():
         return render_template("admin/pages-login.html")
 
 #Delete Portfolio record
-@app.route("/edit-portfolio/action_delete=<int:id>", methods=['POST','GET'])
+@app.route("/manage-portfolio/action-delete=<int:id>", methods=['POST','GET'])
 def delete_portfolio(id):
     if session.get('admin'):
         post = db.session.query(Portfolio).filter_by(id=id).first()
@@ -669,7 +766,7 @@ def save_document(doc):
     doc_name = hash_doc + file_extension
 
     # Set the file path where the document will be saved
-    file_path = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], doc_name)
+    file_path = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER_DOC'], doc_name)
 
     # Save the document to the file system
     doc.save(file_path)
@@ -714,7 +811,7 @@ def edit_resume():
                     updte.resume = new_doc_filename  # Store the document filename
                 except ValueError as e:
                     flash(str(e))
-                    return redirect(url_for('Prof'))
+                    return redirect(url_for('manage_resume'))
 
             else:
                 # No document uploaded, so keep the old one
@@ -729,7 +826,7 @@ def edit_resume():
             db.session.commit()
 
             flash("CHANGES WERE MADE SUCCESSFULLY")
-            return redirect(url_for('Prof'))
+            return redirect(url_for('manage_resume'))
 
         else:
             res = db.session.query(Resume).filter(Resume.uid == session.get('aid')).first()

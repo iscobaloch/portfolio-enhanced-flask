@@ -28,7 +28,14 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">MANAGE SKILLS</h4>
+                                        <h4 class="header-title">MANAGE SKILLS</h4> <div class="d-flex justify-content-end">
+  <a href="{{url_for('add_skill')}}">
+    <button type="button" class="btn btn-success">
+      <i class="mdi mdi-plus"></i>Add Skill
+    </button>
+  </a>
+</div>
+
                                         {% for message in get_flashed_messages()%}
       <p style='color:green'>{{message}}</p>
       {% endfor %}
@@ -56,7 +63,11 @@
                                                             <td>{{s.skill}}</td>
                                                             <td>{{s.percent}}</td>
 
-                                                            <td> <a href="/edit-skill/action_delete={{s.id}}"><button type="button" class="btn btn-danger"><i class="mdi mdi-trash-can"></i> </button></a>
+                                                            <td> <a href="javascript:void(0)" onclick="confirmDelete({{s.id}})">
+    <button type="button" class="btn btn-danger">
+        <i class="mdi mdi-trash-can"></i>
+    </button>
+</a>
                                                               <a href="/manage-skill/id={{s.id}}/action=edit"><button type="button" class="btn btn-warning"><i class="mdi mdi-wrench"></i> </button></a>
 
                                                             </td>

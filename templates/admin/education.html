@@ -29,6 +29,13 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="header-title">MANAGE EDUCATIONAL INFORMATION</h4>
+                                        <div class="d-flex justify-content-end">
+                                        <a href="{{url_for('add_education')}}">
+                                    <button type="button" class="btn btn-success">
+                                     <i class="mdi mdi-plus"></i>Add Degree
+                                  </button>
+                                         </a>
+                                            </div>
                                         {% for message in get_flashed_messages()%}
       <p style='color:green'>{{message}}</p>
       {% endfor %}
@@ -57,7 +64,16 @@
                                                             <td>{{edu.degree}}</td>
                                                             <td>{{edu.years}}</td>
 							 <td>{{edu.institute}}</td>
-							<td> <a href="/edit-education/action_delete={{edu.id}}"><button type="button" class="btn btn-danger"><i class="mdi mdi-trash-can"></i> </button></a>
+							<td> <!-- Button to trigger delete action -->
+<a href="javascript:void(0)" onclick="confirmDelete({{edu.id}})">
+    <button type="button" class="btn btn-danger">
+        <i class="mdi mdi-trash-can"></i>
+    </button>
+</a>
+
+
+
+
                                                               <a href="/manage-education/id={{edu.id}}/action=edit"><button type="button" class="btn btn-warning"><i class="mdi mdi-wrench"></i> </button></a>
 
                                                             </td>

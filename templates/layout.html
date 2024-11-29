@@ -21,17 +21,17 @@
 
     <!-- CSS Skin File -->
     {% if request.path == '/about' %}
-    <link href="{{url_for('static', filename='css/skins/yellowgreen.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/skins/green.css')}}" rel="stylesheet">
     {% elif request.path == '/' %}
     <link href="{{url_for('static', filename='css/skins/blue.css')}}" rel="stylesheet">
-    {% elif request.path == '/contact' %}
-    <link href="{{url_for('static', filename='css/skins/orange.css')}}" rel="stylesheet">
+    {% elif request.path == '/contact-us' %}
+    <link href="{{url_for('static', filename='css/skins/blue.css')}}" rel="stylesheet">
     {% elif request.path == '/portfolio' %}
     <link href="{{url_for('static', filename='css/skins/goldenrod.css')}}" rel="stylesheet">
     {% elif request.path == '/blog' %}
-    <link href="{{url_for('static', filename='css/skins/magenta.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/skins/blue.css')}}" rel="stylesheet">
     {% else %}
-    <link href="{{url_for('static', filename='css/skins/magenta.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/skins/blue.css')}}" rel="stylesheet">
     {% endif %}
 
     <!-- Live Style Switcher - demo only -->
@@ -96,12 +96,12 @@
             <span></span>
             <span></span>
             <ul class="list-unstyled" id="menu">
-                <li {% if request.path == '/' %}class="active"{% endif %}><a href="{{url_for('home')}}"><i class="fa fa-home"></i><span>Home</span></a></li>
-                <li {% if request.path == '/about' %}class="active"{% endif %}><a href="{{url_for('about')}}"><i class="fa fa-user"></i><span>About</span></a></li>
-                <li {% if request.path == '/portfolio' %}class="active"{% endif %}><a href="{{url_for('portfolio')}}"><i class="fa fa-folder-open"></i><span>Portfolio</span></a></li>
-                <li {% if request.path == '/contact' %}class="active"{% endif %}><a href="{{url_for('contact')}}"><i class="fa fa-envelope-open"></i><span>Contact</span></a></li>
-                <li {% if request.path == '/blog' %}class="active"{% endif %}><a href="{{url_for('blog')}}'"><i class="fa fa-comments"></i><span>Blog</span></a></li>
-            </ul>
+                <li {% if request.path =='/' %}class="active"{% endif %}><a href="{{url_for('home')}}"><i class="fa fa-home"></i><span>Home</span></a></li>
+                <li {% if request.path =='/about' %}class="active"{% endif %}><a href="{{url_for('about')}}"><i class="fa fa-user"></i><span>About</span></a></li>
+                <li {% if request.path =='/portfolio' %}class="active"{% endif %}><a href="{{url_for('portfolio')}}"><i class="fa fa-folder-open"></i><span>Portfolio</span></a></li>
+                <li {% if request.path =='/contact' %}class="active"{% endif %}><a href="{{url_for('contact')}}"><i class="fa fa-envelope-open"></i><span>Contact</span></a></li>
+                <li {% if request.path =='/blog' %}class="active"{% endif %}><a href="{{url_for('blog')}}'"><i class="fa fa-comments"></i><span>Blog</span></a></li>
+                </ul>
         </div>
     </nav>
     <!-- Mobile Menu Ends -->
@@ -121,6 +121,7 @@
 <script src="{{url_for('static', filename='js/jquery.hoverdir.js')}}"></script>
 <script src="{{url_for('static', filename='js/popper.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery-3.7.1.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/custom.js')}}"></script>
 
 </body>

@@ -10,6 +10,11 @@
         <link rel="shortcut icon" href="{{url_for('static', filename='assets/images/favicon.ico')}}">
         <!-- CK EDITOR -->
         <script src="{{url_for('static', filename='ckeditor/ckeditor.js')}}"></script>
+<!-- Bootstrap CSS (for modal) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS (for modal functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- third party css -->
         <link href="{{url_for('static', filename='assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css">
@@ -357,6 +362,44 @@
 <script>
 CKEDITOR.replace('editor');
 </script>
+
+<!-- Modal for confirmation (Bootstrap Modal example) -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this record?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="POST">
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add JavaScript to handle the confirmation -->
+<script>
+    function confirmDelete(id) {
+        // Get the current path (this will return the current URL without the domain)
+        var currentPath = window.location.pathname;
+
+        // Update the action of the delete form with the current path and the ID
+        var form = document.getElementById('deleteForm');
+        form.action = currentPath + '/action-delete=' + id;
+
+        // Show the confirmation modal
+        var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        modal.show();
+    }
+</script>
+
 
 <!-- third party js -->
 <script src="{{url_for('static', filename='assets/js/vendor/jquery.dataTables.min.js')}}"></script>

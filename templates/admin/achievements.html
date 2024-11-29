@@ -28,7 +28,12 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">MANAGE EDUCATIONAL INFORMATION</h4>
+                                        <h4 class="header-title">MANAGE EDUCATIONAL INFORMATION</h4>  <a href="{{url_for('add_portfolio')}}">
+    <button type="button" class="btn btn-success">
+      <i class="mdi mdi-plus"></i>Add Project
+    </button>
+  </a>
+</div>
                                         {% for message in get_flashed_messages()%}
       <p style='color:green'>{{message}}</p>
       {% endfor %}

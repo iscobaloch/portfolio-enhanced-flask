@@ -26,6 +26,16 @@ class Log(db.Model):
     username = db2.Column(db2.String(150), nullable=False)
     password = db2.Column(db2.String(120), nullable=False)
 
+class Blog(db.Model):
+    __bind_key__ = 'wali'
+    __tablename__ = 'blog'
+    id = db2.Column(db2.Integer, primary_key=True)
+    title = db2.Column(db2.String(500), nullable=False)
+    post = db2.Column(db2.String(2000), nullable=False)
+    tags = db2.Column(db2.String(2000), nullable=False)
+    date = db2.Column(db2.String(120), nullable=False)
+    thumb = db2.Column(db2.String(200), nullable=False)
+
 class Tblbooking(db.Model):
     __tablename__ = 'tblbooking'
     BookingId = db.Column(db.Integer, primary_key=True)
