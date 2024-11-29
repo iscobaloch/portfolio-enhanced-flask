@@ -1,0 +1,86 @@
+{%extends "admin/base.html"%}
+{% block title%} MANAGE TOUR PACKAGES - ADMIN PANEL{% endblock %}
+   {% block body %}
+
+
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                            <li class="breadcrumb-item active">Tour Packages</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">EDUCATIONAL INFO</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">MANAGE EDUCATIONAL INFORMATION</h4>
+                                        {% for message in get_flashed_messages()%}
+      <p style='color:green'>{{message}}</p>
+      {% endfor %}
+      {% if error %}
+      <p style='color:red'> {{error}}</p>
+      {% endif %}
+                                    <div class="tab-content">
+                                            <div class="tab-pane show active" id="basic-datatable-preview">
+                                                <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                          <th hidden>S#</th>
+                                                            <th>S. NO</th>
+                                                            <th>RESUME</th>
+                                                            <th>DOWNLOAD</th>
+                                                            <th>LAST UPDATED</th>
+                                                            <th>ACTION</th>
+                                                            </tr>
+                                                    </thead>
+
+
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>{{res.rname}}</td>
+                                                            <td><a href="{{ url_for('download_resume', filename=res.resume) }}"><button type="button" class="btn btn-success btn-sm"><i class="mdi mdi-download"></i> </button></a></a></td>
+
+
+							 <td>{{res.update_time | time_ago}}</td>
+							<td> <a href="/edit-resume"><button type="button" class="btn btn-warning"><i class="mdi mdi-wrench"></i> </button></a>
+
+                                                            </td>
+
+
+
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div> <!-- end preview-->
+                                        </div> <!-- end tab-content-->
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div>
+                        <!-- end row-->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+
+                {% endblock %}

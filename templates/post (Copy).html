@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<body class="blog-post">
+
+<!-- Page Title Starts -->
+<section class="title-section text-left text-sm-center">
+    <h1>my <span>blog</span></h1>
+    <span class="title-bg">posts</span>
+</section>
+
+{% if blog.thumb %}
+  {% set fname = 'img/' + blog.thumb %}
+{% else %}
+  {% set fname = 'img/default-thumbnail.jpg' %}
+{% endif %}
+
+<div class="main-content">
+  <div class="container">
+    <div class="row">
+      <!-- Article Starts -->
+      <article class="col-12">
+        <!-- Meta Starts -->
+        <div class="meta open-sans-font">
+          <span>
+            <i class="fa fa-user"></i> WALI BALOCH </span>
+          <span class="date">
+            <i class="fa fa-calendar"></i> {{ blog.date | time_ago }}</span>
+          <span>
+            <i class="fa fa-tags"></i> wordpress, business, economy, design </span>
+        </div>
+        <!-- Meta Ends -->
+
+        <!-- Article Content Starts -->
+        <h1 class="text-uppercase text-capitalize">{{ blog.title }}</h1>
+
+        <!-- Ensure `fname` is correctly passed as the image source -->
+        <img src="{{ url_for('static', filename=fname) }}" class="img-fluid" alt="Blog image" />
+
+        <div class="blog-excerpt open-sans-font pb-5">
+          <p>{{ blog.post }}</p>
+        </div>
+        <!-- Article Content Ends -->
+      </article>
+      <!-- Article Ends -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

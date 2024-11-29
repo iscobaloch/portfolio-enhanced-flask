@@ -1,0 +1,91 @@
+{% extends "admin/base.html" %}
+
+{% block title %} ADD PORTFOLIO - ADMIN PANEL {% endblock %}
+
+{% block body %}
+<!-- Start Content-->
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                        <li class="breadcrumb-item active">ADD PORTFOLIO</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="mb-2">
+                            <h4 class="header-title mt-2">ADD NEW PORTFOLIO PROJECT</h4>
+                            <p class="text-muted font-14">Check all details before submission</p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="tab-content">
+                                                <div class="tab-pane show active" id="input-types-preview">
+                                                    <form method="post" enctype="multipart/form-data">
+                                                        <div class="row">
+                                                            <!-- First Column -->
+                                                            <div class="col-lg-6">
+                                                                <div class="mb-3">
+                                                                    <label for="projcat" class="form-label">PROJECT CATEGORY</label>
+                                                                    <input type="text" id="projcat" name="projcat" class="form-control" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="ptype" class="form-label">PROJECT TYPE</label>
+                                                                    <input type="text" id="ptype" name="ptype" class="form-control" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="plang" class="form-label">LANGUAGES</label>
+                                                                    <input type="text" id="plang" name="plang" class="form-control" required>
+                                                                </div>
+                                                            </div> <!-- end col -->
+
+                                                            <!-- Second Column -->
+                                                            <div class="col-lg-6">
+                                                                <div class="mb-3">
+                                                                    <label for="client" class="form-label">CLIENT</label>
+                                                                    <input type="text" id="client" name="client" class="form-control" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="thumb" class="form-label">THUMBNAIL</label>
+                                                                    <input type="file" name="thumb" id="thumb" class="form-control" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="url" class="form-label">PREVIEW (URL)</label>
+                                                                    <input type="text" name="url" id="url" class="form-control" required>
+                                                                </div>
+                                                            </div> <!-- end col -->
+                                                        </div> <!-- end row -->
+
+                                                        <div class="mt-3">
+                                                            <input type="submit" class="btn btn-primary btn-block" value="ADD PROJECT">
+                                                        </div>
+                                                    </form>
+                                                </div> <!-- end tab-pane -->
+                                            </div> <!-- end tab-content -->
+                                        </div> <!-- end card-body -->
+                                    </div> <!-- end card -->
+                                </div> <!-- end col-12 -->
+                            </div> <!-- end row -->
+                        </div> <!-- end mb-2 -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end container-fluid -->
+
+{% endblock %}

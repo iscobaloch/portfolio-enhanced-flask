@@ -1,0 +1,100 @@
+{%extends "admin/base.html"%}
+{% block title%} MANAGE PORTFOLIO PACKAGES - ADMIN PANEL{% endblock %}
+   {% block body %}
+
+
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                            <li class="breadcrumb-item active">YOUR PROJECTS</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">PROJECTS INFO</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">MANAGE PROJECTS</h4> <div class="d-flex justify-content-end">
+  <a href="{{url_for('add_portfolio')}}">
+    <button type="button" class="btn btn-success">
+      <i class="mdi mdi-plus"></i>Add Project
+    </button>
+  </a>
+</div>
+                                        {% for message in get_flashed_messages()%}
+      <p style='color:green'>{{message}}</p>
+      {% endfor %}
+      {% if error %}
+      <p style='color:red'> {{error}}</p>
+      {% endif %}
+                                    <div class="tab-content">
+                                            <div class="tab-pane show active" id="basic-datatable-preview">
+                                                <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                          <th hidden>S#</th>
+                                                            <th>S. NO</th>
+                                                            <th>PROJECT TITLE</th>
+                                                            <th>TYPE</th>
+                                                            <th>CLIENT</th>
+                                                            <th>LANGUAGES</th>
+                                                            <th>WEBSITE</th>
+                                                            <th>ACTION</th>
+                                                            </tr>
+                                                    </thead>
+
+
+                                                    <tbody>
+                                                      {% for rec in rec%}
+                                                        <tr>
+                                                            <td>{{loop.index}}</td>
+                                                            <td>{{rec.project}}</td>
+                                                            <td>{{rec.category}}</td>
+                                                            <td>{{rec.client}}</td>
+                                                            <td>{{rec.progr}}</td>
+                                                            <td><a href="{{rec.website}}" target="_blank"><button type="button" class="btn btn-primary"><i class="mdi mdi-web"></i> </button></td>
+
+							<td> <a href="javascript:void(0)" onclick="confirmDelete({{rec.id}})">
+    <button type="button" class="btn btn-danger">
+        <i class="mdi mdi-trash-can"></i>
+    </button>
+</a>
+                                                              <a href="/manage-portfolio/action_edit={{rec.id}}"><button type="button" class="btn btn-warning"><i class="mdi mdi-wrench"></i> </button></a>
+
+                                                            </td>
+
+
+
+                                                        </tr>{% endfor%}
+
+                                                    </tbody>
+                                                </table>
+                                            </div> <!-- end preview-->
+                                        </div> <!-- end tab-content-->
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div>
+                        <!-- end row-->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+
+                {% endblock %}
